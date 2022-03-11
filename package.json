@@ -1,0 +1,46 @@
+{
+  "name": "@norvikit/utm-aska",
+  "version": "1.0.0",
+  "main": "dist/utm-aska.cjs.js",
+  "module": "dist/utm-aska.esm.js",
+  "browser": "dist/utm-aska.min.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NorvikIT/utm-aska.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NorvikIT/utm-aska/issues"
+  },
+  "homepage": "https://github.com/NorvikIT/utm-aska#readme",
+  "keywords": [
+    "js",
+    "utm",
+    "seo"
+  ],
+  "author": "norvikit",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "rollup": "^2.69.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
+}
