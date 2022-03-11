@@ -6,8 +6,20 @@ function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
 function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
 
 function _iterableToArrayLimit(arr, i) {
@@ -57,91 +69,123 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
 function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-function getUtmParams() {
-  var utmKeysMap = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content']; // Объект с полученными utm-метками
+/**
+ * Default utm keys
+ * @type {string[]}
+ */
+var defaultUtmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
 
-  var utmParamsObject; // Получение utm-меток из GET параметров
+/**
+ * Get utm tags from url
+ * @param url
+ * @param utmKeysMap
+ * @returns {{}}
+ */
 
-  function getAllUrlParams(url) {
-    var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
-    var obj = {};
+function getUtmFromUr(url) {
+  var utmKeysMap = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var defaultUtmKeys$1 = [].concat(_toConsumableArray(defaultUtmKeys), [utmKeysMap]);
+  var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+  var obj = {};
 
-    if (queryString) {
-      queryString = queryString.split('#')[0];
-      var arr = queryString.split('&');
+  if (queryString) {
+    queryString = queryString.split('#')[0];
+    var arr = queryString.split('&');
 
-      for (var i = 0; i < arr.length; i++) {
-        var a = arr[i].split('=');
-        var paramName = a[0];
+    for (var i = 0; i < arr.length; i++) {
+      var a = arr[i].split('=');
+      var paramName = a[0];
 
-        if (utmKeysMap.includes(paramName)) {
-          var paramValue = typeof a[1] === 'undefined' ? true : a[1];
-          paramName = paramName.toLowerCase();
-          if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
+      if (defaultUtmKeys$1.includes(paramName)) {
+        var paramValue = typeof a[1] === 'undefined' ? true : a[1];
+        paramName = paramName.toLowerCase();
+        if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
 
-          if (paramName.match(/\[(\d+)?]$/)) {
-            var key = paramName.replace(/\[(\d+)?]/, '');
-            if (!obj[key]) obj[key] = [];
+        if (paramName.match(/\[(\d+)?]$/)) {
+          var key = paramName.replace(/\[(\d+)?]/, '');
+          if (!obj[key]) obj[key] = [];
 
-            if (paramName.match(/\[\d+]$/)) {
-              var index = /\[(\d+)]/.exec(paramName)[1];
-              obj[key][index] = paramValue;
-            } else {
-              obj[key].push(paramValue);
-            }
-          } else if (!obj[paramName]) {
-            obj[paramName] = paramValue;
-          } else if (obj[paramName] && typeof obj[paramName] === 'string') {
-            obj[paramName] = [obj[paramName]];
-            obj[paramName].push(paramValue);
+          if (paramName.match(/\[\d+]$/)) {
+            var index = /\[(\d+)]/.exec(paramName)[1];
+            obj[key][index] = paramValue;
           } else {
-            obj[paramName].push(paramValue);
+            obj[key].push(paramValue);
           }
+        } else if (!obj[paramName]) {
+          obj[paramName] = paramValue;
+        } else if (obj[paramName] && typeof obj[paramName] === 'string') {
+          obj[paramName] = [obj[paramName]];
+          obj[paramName].push(paramValue);
+        } else {
+          obj[paramName].push(paramValue);
         }
       }
     }
+  }
 
-    return obj;
-  } // Получение utm-меток по ключу из cookies
+  return obj;
+}
 
+/**
+ * Get cookie value by name
+ * @param name
+ * @returns {any}
+ */
+function getCookieByName(name) {
+  var value = "; ".concat(document.cookie);
+  var parts = value.split("; ".concat(name, "="));
+  if (parts.length === 2) return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
+}
 
-  function getAllUtmCookies() {
-    return document.cookie.split(';').reduce(function (cookies, cookie) {
-      var _cookie$split$map = cookie.split('=').map(function (c) {
-        return c.trim();
-      }),
-          _cookie$split$map2 = _slicedToArray(_cookie$split$map, 2),
-          name = _cookie$split$map2[0],
-          val = _cookie$split$map2[1];
+/**
+ * Get utm tags from cookies
+ * @param utmKeysMap
+ * @returns {{}}
+ */
 
-      if (utmKeysMap.includes(name)) {
-        cookies[name] = val;
-      }
+function getUtmFromCookies() {
+  var utmKeysMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var defaultUtmKeys$1 = [].concat(_toConsumableArray(defaultUtmKeys), _toConsumableArray(utmKeysMap));
+  return document.cookie.split(';').reduce(function (cookies, cookie) {
+    var _cookie$split$map = cookie.split('=').map(function (c) {
+      return c.trim();
+    }),
+        _cookie$split$map2 = _slicedToArray(_cookie$split$map, 2),
+        name = _cookie$split$map2[0],
+        val = _cookie$split$map2[1];
 
-      return cookies;
-    }, {});
-  } // Получение куки по имени
+    if (defaultUtmKeys$1.includes(name)) {
+      cookies[name] = val;
+    }
 
+    return cookies;
+  }, {});
+}
 
-  function getCookieByName(name) {
-    var value = "; ".concat(document.cookie);
-    var parts = value.split("; ".concat(name, "="));
-    if (parts.length === 2) return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
-  } // Получаем все utm метки из урла страницы
+/**
+ * Get all utm keys from url or cookies
+ * @param utmKeysMap
+ * @returns {{}}
+ */
 
-
-  utmParamsObject = getAllUrlParams(window.location.href);
+function getUtmParams() {
+  var utmKeysMap = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var defaultUtmKeys$1 = [].concat(_toConsumableArray(defaultUtmKeys), _toConsumableArray(utmKeysMap));
+  var utmParamsObject;
+  utmParamsObject = getUtmFromUr(window.location.href, defaultUtmKeys$1);
 
   if (utmParamsObject && Object.keys(utmParamsObject).length === 0) {
-    // Если в урле нет меток, то получаем их из куки по ключам
-    utmParamsObject = getAllUtmCookies();
+    utmParamsObject = getUtmFromCookies(defaultUtmKeys$1);
 
     if (Object.keys(utmParamsObject).length === 0) {
-      // Если в куках по ключам нет меток, то получаем их из куки utm
       utmParamsObject = getCookieByName('utm');
     }
   }
@@ -149,4 +193,7 @@ function getUtmParams() {
   return utmParamsObject;
 }
 
+exports.getCookieByName = getCookieByName;
+exports.getUtmFromCookies = getUtmFromCookies;
+exports.getUtmFromUrl = getUtmFromUr;
 exports.getUtmParams = getUtmParams;

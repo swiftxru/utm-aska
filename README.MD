@@ -21,7 +21,7 @@ Library to get UTM params from url and cookies
 ```
 <html>
   <head>
-    <script src="scripts/utm-aska.min.js"></script>
+    <script src="dist/utm-aska.min.js"></script>
   </head>
   <body>
     <div id="app" />
@@ -49,3 +49,17 @@ utmAska.getUtmParams();
 const { getUtmParams } = require("utm-aska");
 getUtmParams();
 ```
+
+## 📚 Functions
+
+### `utmAska.getUtmParams(arrayOfUtmTags)`
+
+Get utm tags from current page url or cookies
+
+### `utmAska.getUrmFromUrl(arrayOfUtmTags)`
+
+Get utm tags from current page url
+
+### `utmAska.getUtmFromCookies(arrayOfUtmTags)`
+
+Get utm tags from cookies
