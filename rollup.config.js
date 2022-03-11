@@ -43,6 +43,12 @@ export default [
         ],
         plugins: [
             resolve(),
+            terser({
+                format: {
+                    comments: false
+                },
+                compress: true
+            }),
             babel({
                 exclude: ["node_modules/**"],
             }),
