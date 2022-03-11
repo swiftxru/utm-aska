@@ -1,6 +1,6 @@
 {
   "name": "@norvikit/utm-aska",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "main": "dist/utm-aska.cjs.js",
   "module": "dist/utm-aska.esm.js",
   "browser": "dist/utm-aska.min.js",
