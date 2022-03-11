@@ -3,9 +3,7 @@
  * @param name
  * @returns {any}
  */
+import Cookies from 'js-cookie'
 export default function getCookieByName(name) {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2)
-        return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()))
+    return Cookies.get(name)
 }

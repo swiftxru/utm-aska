@@ -1,4 +1,5 @@
 import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
+import Cookies from 'js-cookie'
 
 /**
  * Get utm tags from cookies
@@ -8,11 +9,12 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
 export default function getUtmFromCookies(utmKeysMap = []) {
     let defaultUtmKeys = [...defaultImportedKeys, ...utmKeysMap]
 
-    return document.cookie.split(';').reduce((cookies, cookie) => {
-        const [name, val] = cookie.split('=').map((c) => c.trim())
-        if (defaultUtmKeys.includes(name)) {
-            cookies[name] = val
+    const allCookies = Cookies.get()
+    const utmCookies = {}
+    Object.keys(allCookies).forEach(cookie => {
+        if (defaultUtmKeys.includes(cookie)) {
+            utmCookies[cookie] = allCookies[cookie]
         }
-        return cookies
-    }, {})
+    })
+    return utmCookies
 }
