@@ -63,3 +63,7 @@ Get utm tags from current page url
 ### `utmAska.getUtmFromCookies(arrayOfUtmTags)`
 
 Get utm tags from cookies
+
+### `utmAska.getCookieByName(cookieName)`
+
+Get value of single cookie record by name
