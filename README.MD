@@ -56,7 +56,7 @@ getUtmParams();
 
 Get utm tags from current page url or cookies
 
-### `utmAska.getUrmFromUrl(arrayOfUtmTags)`
+### `utmAska.getUtmFromUrl(arrayOfUtmTags)`
 
 Get utm tags from current page url
 
