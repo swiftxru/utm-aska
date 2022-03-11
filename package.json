@@ -1,11 +1,12 @@
 {
   "name": "@norvikit/utm-aska",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "main": "dist/utm-aska.cjs.js",
   "module": "dist/utm-aska.esm.js",
   "browser": "dist/utm-aska.min.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "semantic-release": "semantic-release"
   },
   "publishConfig": {
     "access": "public"
@@ -32,7 +33,8 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "semantic-release": "^19.0.2"
   },
   "files": [
     "dist",
