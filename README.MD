@@ -1,6 +1,7 @@
 # UTM Aska
 ![Size](https://img.shields.io/bundlephobia/minzip/@norvikit/utm-aska)
 ![Version](https://img.shields.io/npm/v/@norvikit/utm-aska)
+![Downloads](https://img.shields.io/npm/dt/@norvikit/utm-aska)
 
 ## 📃 Description
 Library to get UTM params from url and cookies
