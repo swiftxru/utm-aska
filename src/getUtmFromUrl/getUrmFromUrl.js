@@ -8,15 +8,7 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
  */
 export default function getUtmFromUrl(url, utmKeysMap = []) {
 
-    if (window.location.hash === 'debug') {
-        console.log('getUtmFromUrl - utmKeysMap', utmKeysMap)
-    }
-
     let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
-
-    if (window.location.hash === 'debug') {
-        console.log('getUtmFromUrl - utmKeys', utmKeys)
-    }
 
     let queryString = url
         ? url.split('?')[1]

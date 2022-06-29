@@ -10,15 +10,7 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
  */
 export default function getUtmParams(utmKeysMap = []) {
 
-    if (window.location.hash === 'debug') {
-        console.log('getUtmParams - utmKeysMap', utmKeysMap)
-    }
-
     let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
-
-    if (window.location.hash === 'debug') {
-        console.log('getUtmParams - utmKeys', utmKeys)
-    }
 
     let utmParamsObject
 
