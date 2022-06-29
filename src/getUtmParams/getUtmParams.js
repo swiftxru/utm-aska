@@ -11,6 +11,7 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
 export default function getUtmParams(utmKeysMap = []) {
 
     let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    utmKeys = [...new Set(utmKeys)]
 
     let utmParamsObject
 

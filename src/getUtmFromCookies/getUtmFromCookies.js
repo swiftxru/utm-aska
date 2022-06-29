@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
  */
 export default function getUtmFromCookies(utmKeysMap = []) {
     let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    utmKeys = [...new Set(utmKeys)]
 
     const allCookies = Cookies.get()
     const utmCookies = {}

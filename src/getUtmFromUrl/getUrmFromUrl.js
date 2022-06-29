@@ -9,6 +9,7 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
 export default function getUtmFromUrl(url, utmKeysMap = []) {
 
     let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    utmKeys = [...new Set(utmKeys)]
 
     let queryString = url
         ? url.split('?')[1]
