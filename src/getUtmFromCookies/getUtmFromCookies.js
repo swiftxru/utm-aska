@@ -7,12 +7,12 @@ import Cookies from 'js-cookie'
  * @returns {{}}
  */
 export default function getUtmFromCookies(utmKeysMap = []) {
-    let defaultUtmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
 
     const allCookies = Cookies.get()
     const utmCookies = {}
     Object.keys(allCookies).forEach(cookie => {
-        if (defaultUtmKeys.includes(cookie)) {
+        if (utmKeys.includes(cookie)) {
             utmCookies[cookie] = allCookies[cookie]
         }
     })

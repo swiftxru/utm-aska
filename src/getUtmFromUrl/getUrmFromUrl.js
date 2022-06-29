@@ -8,7 +8,7 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
  */
 export default function getUtmFromUrl(url, utmKeysMap = []) {
 
-    let defaultUtmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
 
     let queryString = url
         ? url.split('?')[1]
@@ -22,7 +22,7 @@ export default function getUtmFromUrl(url, utmKeysMap = []) {
         for (let i = 0; i < arr.length; i++) {
             const a = arr[i].split('=')
             let paramName = a[0]
-            if (defaultUtmKeys.includes(paramName)) {
+            if (utmKeys.includes(paramName)) {
                 let paramValue = typeof a[1] === 'undefined' ? true : a[1]
 
                 paramName = paramName.toLowerCase()

@@ -10,13 +10,13 @@ import { defaultUtmKeys as defaultImportedKeys } from "../defaultUtmKeys"
  */
 export default function getUtmParams(utmKeysMap = []) {
 
-    let defaultUtmKeys = [...defaultImportedKeys, ...utmKeysMap]
+    let utmKeys = [...defaultImportedKeys, ...utmKeysMap]
 
     let utmParamsObject
 
-    utmParamsObject = getUtmFromUrl(window.location.href, defaultUtmKeys)
+    utmParamsObject = getUtmFromUrl(window.location.href, utmKeys)
     if (utmParamsObject && Object.keys(utmParamsObject).length === 0) {
-        utmParamsObject = getUtmFromCookies(defaultUtmKeys)
+        utmParamsObject = getUtmFromCookies(utmKeys)
         if (Object.keys(utmParamsObject).length === 0) {
             utmParamsObject = getCookieByName('utm')
         }
