@@ -5,5 +5,5 @@
  */
 import Cookies from 'js-cookie'
 export default function getCookieByName(name) {
-    return Cookies.get(name)
+    return JSON.parse(Cookies.get(name))
 }
